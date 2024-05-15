@@ -1,8 +1,9 @@
 // web-src/js/chat-box.js
 import { LitElement, html, css } from 'lit';
 import { initializeApp } from 'firebase/app';
-import { getDatabase, ref, push, onValue } from 'firebase/database';
+import { getDatabase, ref, push, onValue, remove } from 'firebase/database';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import '@material/web/button/filled-button.js';
 import './chat-message.js';
 import './chat-input.js';
 
@@ -67,6 +68,15 @@ class ChatBox extends LitElement {
     }
   }
 
+  resetConversation() {
+    if (this.userId) {
+      const messagesRef = ref(database, `${this.path}/${this.userId}`);
+      remove(messagesRef).then(() => {
+        this.messages = [];
+      });
+    }
+  }
+
   render() {
     return html`
       <div class="chat-box">
@@ -76,6 +86,7 @@ class ChatBox extends LitElement {
           )}
         </div>
         <chat-input @send-message="${this.handleSendMessage}"></chat-input>
+        <md-filled-button @click="${this.resetConversation}">Reset</md-filled-button>
       </div>
     `;
   }
@@ -98,6 +109,9 @@ class ChatBox extends LitElement {
       padding-bottom: 8px;
       display: flex;
       flex-direction: column;
+    }
+    md-filled-button {
+      margin-top: 8px;
     }
   `;
 }
