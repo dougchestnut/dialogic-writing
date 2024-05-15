@@ -1,7 +1,6 @@
 // web-src/js/my-app.js
 import { LitElement, html, css } from 'lit-element';
-import './auth-ui-login.js';
-import { firebaseConfig } from './firebase-config.js';
+import './header-bar.js';
 
 class MyApp extends LitElement {
   static styles = css`
@@ -14,8 +13,7 @@ class MyApp extends LitElement {
 
   render() {
     return html`
-      <h1>Welcome to My App!</h1>
-      <auth-ui-login></auth-ui-login>
+      <header-bar><span slot="title">Writing Assist</span></header-bar>
     `;
   }
 }
