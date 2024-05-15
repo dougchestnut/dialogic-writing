@@ -21,6 +21,7 @@
     "@vaadin/router": "^1.7.5",
     "firebase": "^10.12.0",
     "firebaseui": "^6.1.0",
-    "lit-element": "^4.0.5"
+    "lit-element": "^4.0.5",
+    "marked": "^12.0.2"
   }
 }

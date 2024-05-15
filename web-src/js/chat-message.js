@@ -1,5 +1,7 @@
 // web-src/js/chat-message.js
 import { LitElement, html, css } from 'lit';
+import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { marked } from 'marked';
 
 class ChatMessage extends LitElement {
   static properties = {
@@ -41,7 +43,7 @@ class ChatMessage extends LitElement {
     return html`
       <div class="message ${this.message.sender}">
         <div class="sender">${this.message.senderName}</div>
-        <span>${this.message.text}</span>
+        <span>${unsafeHTML(marked(this.message.text))}</span>
       </div>
     `;
   }
