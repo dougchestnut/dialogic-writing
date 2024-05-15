@@ -13,10 +13,35 @@ exports.generateResponse = functions.database
   .ref('/chats/{userId}/{messageId}')
   .onCreate(async (snapshot, context) => {
     const message = snapshot.val();
+    const userId = context.params.userId;
+
     if (message.sender === 'user') {
+      // Fetch conversation history
+      const messagesRef = db.ref(`/chats/${userId}`);
+      const snapshot = await messagesRef.once('value');
+      const messagesData = snapshot.val();
+
+      // Prepare conversation history
+      const messages = [];
+      if (messagesData) {
+        Object.values(messagesData).forEach((msg) => {
+          messages.push({
+            role: msg.sender === 'user' ? 'user' : 'assistant',
+            content: msg.text,
+          });
+        });
+      }
+
+      // Add the new message to the history
+      messages.push({
+        role: 'user',
+        content: message.text,
+      });
+
+      // Generate AI response with conversation history
       const response = await openai.chat.completions.create({
-        model: 'gpt-4o',
-        messages: [{ role: 'user', content: message.text }],
+        model: 'gpt-3.5-turbo', // Make sure you are using the correct model
+        messages: messages,
       });
 
       const botMessage = {
@@ -25,6 +50,6 @@ exports.generateResponse = functions.database
         timestamp: new Date().toISOString(),
       };
 
-      await db.ref(`/chats/${context.params.userId}`).push(botMessage);
+      await messagesRef.push(botMessage);
     }
   });
