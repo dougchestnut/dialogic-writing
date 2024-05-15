@@ -1,44 +1,68 @@
 // web-src/js/chat-box.js
 import { LitElement, html, css } from 'lit';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, push, onValue } from 'firebase/database';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './chat-message.js';
 import './chat-input.js';
+
+// Firebase configuration
+import { firebaseConfig } from './firebase-config.js';
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const auth = getAuth(app);
 
 class ChatBox extends LitElement {
   static properties = {
     messages: { type: Array },
+    userId: { type: String },
   };
 
   constructor() {
     super();
     this.messages = [];
+    this.userId = null;
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.listenForMessages();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        this.userId = user.uid;
+        this.listenForMessages();
+      } else {
+        this.userId = null;
+      }
+    });
   }
 
   listenForMessages() {
-    // Setup Firebase listener here
-    // Example: firebase.database().ref('chats/{user-id}').on('value', (snapshot) => {
-    //   this.messages = snapshot.val() || [];
-    // });
+    if (this.userId) {
+      const messagesRef = ref(database, `chats/${this.userId}`);
+      onValue(messagesRef, (snapshot) => {
+        const data = snapshot.val();
+        this.messages = data ? Object.values(data) : [];
+      });
+    }
   }
 
   handleSendMessage(event) {
     const newMessage = {
       sender: 'user',
-      senderName: 'You',  // Adjust as needed to reflect the user's actual name
+      senderName: 'You', // Adjust as needed to reflect the user's actual name
       text: event.detail.text,
       timestamp: new Date().toISOString(),
     };
-    this.messages = [...this.messages, newMessage];
     this.saveMessage(newMessage);
   }
 
   saveMessage(message) {
-    // Save the message to Firebase
-    // Example: firebase.database().ref('chats/{user-id}').push(message);
+    if (this.userId) {
+      const messagesRef = ref(database, `chats/${this.userId}`);
+      push(messagesRef, message);
+    }
   }
 
   render() {
