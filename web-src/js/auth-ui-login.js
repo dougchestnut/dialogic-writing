@@ -1,4 +1,4 @@
-// web-src/js/auth-ui.js
+// web-src/js/auth-ui-login.js
 import { LitElement, html, css } from 'lit-element';
 import { initializeApp } from 'firebase/app';
 import { getAuth, EmailAuthProvider } from 'firebase/auth';
@@ -12,12 +12,13 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firebase Auth
 const auth = getAuth(app);
 
-class AuthUI extends LitElement {
+class AuthUILogin extends LitElement {
   firstUpdated() {
     const uiConfig = {
       callbacks: {
         signInSuccessWithAuthResult: (authResult, redirectUrl) => {
           console.log('User signed in successfully:', authResult);
+          this.dispatchEvent(new CustomEvent('auth-success', { detail: authResult }));
           return false; // Prevent automatic redirect
         },
         signInFailure: (error) => {
@@ -43,8 +44,7 @@ class AuthUI extends LitElement {
     auth.onAuthStateChanged((user) => {
       if (user) {
         console.log('User already signed in:', user);
-        // Handle user already signed in
-        ui.reset(); // Reset the UI to prevent re-creation of account
+        this.dispatchEvent(new CustomEvent('auth-success', { detail: user }));
         // Additional logic for signed-in user, e.g., redirect or update UI
       }
     });
@@ -57,4 +57,4 @@ class AuthUI extends LitElement {
   }
 }
 
-customElements.define('auth-ui', AuthUI);
+customElements.define('auth-ui-login', AuthUILogin);
