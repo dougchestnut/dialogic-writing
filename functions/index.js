@@ -1,28 +1,27 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-const { Configuration, OpenAIApi } = require('openai');
+const OpenAI = require('openai');
 
 admin.initializeApp();
 const db = admin.database();
 
-const configuration = new Configuration({
-  apiKey: functions.config().openai.key,
+const openai = new OpenAI({
+  apiKey: functions.config().openai.key, // Ensure the functions config is set
 });
-const openai = new OpenAIApi(configuration);
 
 exports.generateResponse = functions.database
   .ref('/chats/{userId}/{messageId}')
   .onCreate(async (snapshot, context) => {
     const message = snapshot.val();
     if (message.sender === 'user') {
-      const response = await openai.createChatCompletion({
-        model: 'gpt-3.5-turbo',
+      const response = await openai.chat.completions.create({
+        model: 'gpt-4o',
         messages: [{ role: 'user', content: message.text }],
       });
 
       const botMessage = {
         sender: 'bot',
-        text: response.data.choices[0].message.content,
+        text: response.choices[0].message.content,
         timestamp: new Date().toISOString(),
       };
 
