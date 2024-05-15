@@ -1,11 +1,11 @@
 // web-src/js/firebase-config.js
 export const firebaseConfig = {
-    apiKey: "AIzaSyAnbEWhDNFgo896bU3t-O20KuHr8jhHCxY",
-    authDomain: "writing-assist.firebaseapp.com",
-    databaseURL: "https://writing-assist-default-rtdb.firebaseio.com",
-    projectId: "writing-assist",
-    storageBucket: "writing-assist.appspot.com",
-    messagingSenderId: "668975628741",
-    appId: "1:668975628741:web:214e555ea5a1e4ae110bac",
-    measurementId: "G-F6FS0Z1T0H"
+    apiKey: "AIzaSyD0KLqi6k-H5mstEVvuattvvqa_XooKKIE",
+    authDomain: "dialogic-writing.firebaseapp.com",
+    databaseURL: "https://dialogic-writing-default-rtdb.firebaseio.com",
+    projectId: "dialogic-writing",
+    storageBucket: "dialogic-writing.appspot.com",
+    messagingSenderId: "191541552813",
+    appId: "1:191541552813:web:7b5bcda53dda803d3a4824",
+    measurementId: "G-ZQEX3Y9W9R"
 };

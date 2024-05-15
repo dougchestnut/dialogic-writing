@@ -1,10 +1,10 @@
 {
   "projects": {
-    "default": "writing-assist"
+    "default": "dialogic-writing"
   },
   "targets": {},
   "etags": {
-    "writing-assist": {
+    "dialogic-writing": {
       "extensionInstances": {}
     }
   },
