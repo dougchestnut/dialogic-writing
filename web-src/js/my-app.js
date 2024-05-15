@@ -4,6 +4,7 @@ import { Router } from '@vaadin/router';
 import './header-bar.js';
 import './home-page.js';
 import './intro-page.js';
+import './site-bookshelf.js';
 
 class MyApp extends LitElement {
   static styles = css`
@@ -23,6 +24,7 @@ class MyApp extends LitElement {
     router.setRoutes([
       { path: '/', component: 'home-page' },
       { path: '/intro', component: 'intro-page' },
+      { path: '/bookshelf', component: 'site-bookshelf' },
     ]);
   }
 

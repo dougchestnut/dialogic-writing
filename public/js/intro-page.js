@@ -3218,7 +3218,7 @@ function(e,t){const n=rn(e,"auth");if(n.isInitialized()){const e=n.getImmediate(
     }
   `;render(){return q`
       <h1>Intro</h1>
-      <p>This is the introduction page for the Writing Assistant application. We will have our initial convo here and then move onto our static content page and our multi-hatted discussion page.</p>
+      <p>This is the introduction page for the Writing Assistant application. We will have our initial convo here and then move onto our static content page and our multi-hatted discussion page. Or progress to our <a href="/bookshelf">Bookshelf</a>.</p>
       <div class="chat-container">
         <chat-box></chat-box>  <!-- Add the ChatBox component -->
       </div>

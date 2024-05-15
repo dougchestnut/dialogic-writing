@@ -1,6 +1,36 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 const OpenAI = require('openai');
+const fetch = require('node-fetch');
+const cors = require('cors')({ origin: true });
+
+const ZOTERO_API_KEY = functions.config().zotero.api_key;
+const ZOTERO_GROUP_ID = functions.config().zotero.group_id;
+
+exports.fetchZoteroReferences = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    const url = `https://api.zotero.org/groups/${ZOTERO_GROUP_ID}/items?format=json&v=3`;
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'Zotero-API-Key': ZOTERO_API_KEY,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error fetching Zotero references: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      res.status(200).json(data);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
+  });
+});
+
+
 
 admin.initializeApp();
 const db = admin.database();
