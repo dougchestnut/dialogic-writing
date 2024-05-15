@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "default": "writing-assist"
+  },
+  "targets": {},
+  "etags": {
+    "writing-assist": {
+      "extensionInstances": {}
+    }
+  },
+  "dataconnectEmulatorConfig": {}
+}
