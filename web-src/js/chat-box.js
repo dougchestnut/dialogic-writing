@@ -18,12 +18,14 @@ class ChatBox extends LitElement {
   static properties = {
     messages: { type: Array },
     userId: { type: String },
+    path: { type: String },
   };
 
   constructor() {
     super();
     this.messages = [];
     this.userId = null;
+    this.path = 'chats'; // Default path if not provided
   }
 
   connectedCallback() {
@@ -40,7 +42,7 @@ class ChatBox extends LitElement {
 
   listenForMessages() {
     if (this.userId) {
-      const messagesRef = ref(database, `chats/${this.userId}`);
+      const messagesRef = ref(database, `${this.path}/${this.userId}`);
       onValue(messagesRef, (snapshot) => {
         const data = snapshot.val();
         this.messages = data ? Object.values(data) : [];
@@ -60,7 +62,7 @@ class ChatBox extends LitElement {
 
   saveMessage(message) {
     if (this.userId) {
-      const messagesRef = ref(database, `chats/${this.userId}`);
+      const messagesRef = ref(database, `${this.path}/${this.userId}`);
       push(messagesRef, message);
     }
   }
