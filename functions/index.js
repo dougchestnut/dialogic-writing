@@ -70,6 +70,7 @@ exports.generateResponse = functions.database
           messages.push({
             role: msg.sender === 'user' ? 'user' : 'assistant',
             content: msg.text,
+            senderName: msg.senderName || msg.sender, // Ensure senderName is carried over
           });
         });
       }
@@ -78,6 +79,7 @@ exports.generateResponse = functions.database
       messages.push({
         role: 'user',
         content: message.text,
+        senderName: 'You', // Add senderName for the user message
       });
 
       // Generate AI responses from each persona
@@ -94,6 +96,7 @@ exports.generateResponse = functions.database
 
         const botMessage = {
           sender: persona.name,
+          senderName: persona.name, // Include the persona's name
           text: response.choices[0].message.content,
           timestamp: new Date().toISOString(),
         };
