@@ -26,7 +26,8 @@ var b;m[f]=!0,m.elementProperties=new Map,m.elementStyles=[],m.shadowRootOptions
     }
     .message {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
       padding: 8px;
       border-radius: 8px;
       max-width: 75%;
@@ -43,8 +44,13 @@ var b;m[f]=!0,m.elementProperties=new Map,m.elementStyles=[],m.shadowRootOptions
       align-self: flex-start;
       margin-right: auto;
     }
+    .sender {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
   `;render(){return N`
       <div class="message ${this.message.sender}">
+        <div class="sender">${this.message.senderName}</div>
         <span>${this.message.text}</span>
       </div>
     `}}function ne(e,t,r,i){var o,a=arguments.length,l=a<3?t:null===i?i=Object.getOwnPropertyDescriptor(t,r):i;if("object"==typeof Reflect&&"function"==typeof Reflect.decorate)l=Reflect.decorate(e,t,r,i);else for(var n=e.length-1;n>=0;n--)(o=e[n])&&(l=(a<3?o(l):a>3?o(t,r,l):o(t,r))||l);return a>3&&l&&Object.defineProperty(t,r,l),l}customElements.define("chat-message",le),"function"==typeof SuppressedError&&SuppressedError;
@@ -475,9 +481,9 @@ class Ut extends Nt{constructor(){super(...arguments),this.fieldTag=ct`md-filled
       margin-right: 8px;
     }
   `;render(){return N`
-      <md-filled-text-field id="message-input" label="Type your message"></md-filled-text-field>
+      <md-filled-text-field id="message-input" label="Type your message" @keydown="${this.handleKeyDown}"></md-filled-text-field>
       <md-filled-button @click="${this.sendMessage}">Send</md-filled-button>
-    `}sendMessage(){const e=this.shadowRoot.getElementById("message-input"),t=new CustomEvent("send-message",{detail:{text:e.value}});this.dispatchEvent(t),e.value=""}}customElements.define("chat-input",Dt);class Ht extends oe{static properties={messages:{type:Array}};constructor(){super(),this.messages=[]}connectedCallback(){super.connectedCallback(),this.listenForMessages()}listenForMessages(){}handleSendMessage(e){const t={sender:"user",text:e.detail.text,timestamp:(new Date).toISOString()};this.messages=[...this.messages,t],this.saveMessage(t)}saveMessage(e){}render(){return N`
+    `}handleKeyDown(e){"Enter"===e.key&&(e.preventDefault(),this.sendMessage())}sendMessage(){const e=this.shadowRoot.getElementById("message-input"),t=new CustomEvent("send-message",{detail:{text:e.value}});this.dispatchEvent(t),e.value=""}}customElements.define("chat-input",Dt);class Ht extends oe{static properties={messages:{type:Array}};constructor(){super(),this.messages=[]}connectedCallback(){super.connectedCallback(),this.listenForMessages()}listenForMessages(){}handleSendMessage(e){const t={sender:"user",senderName:"You",text:e.detail.text,timestamp:(new Date).toISOString()};this.messages=[...this.messages,t],this.saveMessage(t)}saveMessage(e){}render(){return N`
       <div class="chat-box">
         <div class="messages">
           ${this.messages.map((e=>N`<chat-message .message="${e}"></chat-message>`))}

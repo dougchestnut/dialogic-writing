@@ -28,6 +28,7 @@ class ChatBox extends LitElement {
   handleSendMessage(event) {
     const newMessage = {
       sender: 'user',
+      senderName: 'You',  // Adjust as needed to reflect the user's actual name
       text: event.detail.text,
       timestamp: new Date().toISOString(),
     };

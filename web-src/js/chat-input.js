@@ -19,9 +19,16 @@ class ChatInput extends LitElement {
 
   render() {
     return html`
-      <md-filled-text-field id="message-input" label="Type your message"></md-filled-text-field>
+      <md-filled-text-field id="message-input" label="Type your message" @keydown="${this.handleKeyDown}"></md-filled-text-field>
       <md-filled-button @click="${this.sendMessage}">Send</md-filled-button>
     `;
+  }
+
+  handleKeyDown(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this.sendMessage();
+    }
   }
 
   sendMessage() {

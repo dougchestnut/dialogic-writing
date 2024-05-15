@@ -2127,7 +2127,8 @@ class ol extends nl{constructor(){super(...arguments),this.fieldTag=vr`md-filled
     }
     .message {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
       padding: 8px;
       border-radius: 8px;
       max-width: 75%;
@@ -2144,8 +2145,13 @@ class ol extends nl{constructor(){super(...arguments),this.fieldTag=vr`md-filled
       align-self: flex-start;
       margin-right: auto;
     }
+    .sender {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
   `;render(){return M`
       <div class="message ${this.message.sender}">
+        <div class="sender">${this.message.senderName}</div>
         <span>${this.message.text}</span>
       </div>
     `}}customElements.define("chat-message",pl);class fl extends ne{static styles=o`
@@ -2160,9 +2166,9 @@ class ol extends nl{constructor(){super(...arguments),this.fieldTag=vr`md-filled
       margin-right: 8px;
     }
   `;render(){return M`
-      <md-filled-text-field id="message-input" label="Type your message"></md-filled-text-field>
+      <md-filled-text-field id="message-input" label="Type your message" @keydown="${this.handleKeyDown}"></md-filled-text-field>
       <md-filled-button @click="${this.sendMessage}">Send</md-filled-button>
-    `}sendMessage(){const e=this.shadowRoot.getElementById("message-input"),t=new CustomEvent("send-message",{detail:{text:e.value}});this.dispatchEvent(t),e.value=""}}customElements.define("chat-input",fl);class vl extends ne{static properties={messages:{type:Array}};constructor(){super(),this.messages=[]}connectedCallback(){super.connectedCallback(),this.listenForMessages()}listenForMessages(){}handleSendMessage(e){const t={sender:"user",text:e.detail.text,timestamp:(new Date).toISOString()};this.messages=[...this.messages,t],this.saveMessage(t)}saveMessage(e){}render(){return M`
+    `}handleKeyDown(e){"Enter"===e.key&&(e.preventDefault(),this.sendMessage())}sendMessage(){const e=this.shadowRoot.getElementById("message-input"),t=new CustomEvent("send-message",{detail:{text:e.value}});this.dispatchEvent(t),e.value=""}}customElements.define("chat-input",fl);class vl extends ne{static properties={messages:{type:Array}};constructor(){super(),this.messages=[]}connectedCallback(){super.connectedCallback(),this.listenForMessages()}listenForMessages(){}handleSendMessage(e){const t={sender:"user",senderName:"You",text:e.detail.text,timestamp:(new Date).toISOString()};this.messages=[...this.messages,t],this.saveMessage(t)}saveMessage(e){}render(){return M`
       <div class="chat-box">
         <div class="messages">
           ${this.messages.map((e=>M`<chat-message .message="${e}"></chat-message>`))}

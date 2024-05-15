@@ -13,7 +13,8 @@ class ChatMessage extends LitElement {
     }
     .message {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-start;
       padding: 8px;
       border-radius: 8px;
       max-width: 75%;
@@ -30,11 +31,16 @@ class ChatMessage extends LitElement {
       align-self: flex-start;
       margin-right: auto;
     }
+    .sender {
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
   `;
 
   render() {
     return html`
       <div class="message ${this.message.sender}">
+        <div class="sender">${this.message.senderName}</div>
         <span>${this.message.text}</span>
       </div>
     `;
