@@ -32,6 +32,7 @@ class SiteBookshelf extends LitElement {
     return html`
       <div class="bookshelf">
         <h1>Bookshelf</h1>
+        <p>This page is a placeholder for references that you should see to help you.  Feel free to progress on to have a writing <a href="/conversation">conversation</a>.</p>
         ${this.references.length > 0
           ? html`
               <ul>

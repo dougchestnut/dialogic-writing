@@ -2203,7 +2203,7 @@ class Tl extends El{constructor(){super(...arguments),this.fieldTag=gn`md-filled
     `}});class Ol extends se{static properties={user:{type:Object}};constructor(){super(),this.user=null}connectedCallback(){super.connectedCallback()}render(){return q`
       <header>
         <div class="title">
-          <slot name="title">My Website</slot>
+          <slot name="title"></slot>
         </div>
         <div class="auth">
           <modal-auth-login @auth-success="${this.handleAuthSuccess}"></modal-auth-login>
@@ -3490,6 +3490,7 @@ class rf extends jt{constructor(e){if(super(e),this.it=B,e.type!==Ut)throw Error
     `}}customElements.define("intro-page",wm);class xm extends se{static properties={references:{type:Array}};constructor(){super(),this.references=[],this.fetchReferences()}async fetchReferences(){try{const e=await fetch("https://us-central1-dialogic-writing.cloudfunctions.net/fetchZoteroReferences");if(!e.ok)throw new Error("Failed to fetch Zotero references");const t=await e.json();this.references=t}catch(e){console.error("Error fetching Zotero references:",e)}}render(){return q`
       <div class="bookshelf">
         <h1>Bookshelf</h1>
+        <p>This page is a placeholder for references that you should see to help you.  Feel free to progress on to have a writing <a href="/conversation">conversation</a>.</p>
         ${this.references.length>0?q`
               <ul>
                 ${this.references.map((e=>q`
@@ -3533,13 +3534,27 @@ class rf extends jt{constructor(e){if(super(e),this.it=B,e.type!==Ut)throw Error
     :host {
       display: block;
       padding: 16px;
+    }
+    h1 {
+      font-family: var(--title-font);
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+  `;render(){return q`
+      <h1>Conversation</h1>
+      <chat-box path="convos"></chat-box>
+    `}}customElements.define("site-conversation",km);class Cm extends se{static styles=s`
+    :host {
+      display: block;
+      padding: 16px;
       color: var(--my-app-text-color, black);
     }
 
     main {
       padding: 16px;
     }
-  `;firstUpdated(){new dt(this.shadowRoot.querySelector("main")).setRoutes([{path:"/",component:"home-page"},{path:"/intro",component:"intro-page"},{path:"/bookshelf",component:"site-bookshelf"}])}render(){return q`
-      <header-bar><span slot="title">Writing Assist</span></header-bar>
+  `;firstUpdated(){new dt(this.shadowRoot.querySelector("main")).setRoutes([{path:"/",component:"home-page"},{path:"/intro",component:"intro-page"},{path:"/bookshelf",component:"site-bookshelf"},{path:"/conversation",component:"site-conversation"}])}render(){return q`
+      <header-bar><span slot="title">Dialogic Writing</span></header-bar>
       <main></main>
-    `}}customElements.define("my-app",km);
+    `}}customElements.define("my-app",Cm);

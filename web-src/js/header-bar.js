@@ -23,7 +23,7 @@ class HeaderBar extends LitElement {
     return html`
       <header>
         <div class="title">
-          <slot name="title">My Website</slot>
+          <slot name="title"></slot>
         </div>
         <div class="auth">
           <modal-auth-login @auth-success="${this.handleAuthSuccess}"></modal-auth-login>

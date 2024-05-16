@@ -2087,7 +2087,7 @@ class Js extends Gs{constructor(){super(...arguments),this.fieldTag=nt`md-filled
     `}});class ta extends ne{static properties={user:{type:Object}};constructor(){super(),this.user=null}connectedCallback(){super.connectedCallback()}render(){return V`
       <header>
         <div class="title">
-          <slot name="title">My Website</slot>
+          <slot name="title"></slot>
         </div>
         <div class="auth">
           <modal-auth-login @auth-success="${this.handleAuthSuccess}"></modal-auth-login>

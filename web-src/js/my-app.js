@@ -5,6 +5,7 @@ import './header-bar.js';
 import './home-page.js';
 import './intro-page.js';
 import './site-bookshelf.js';
+import './site-conversation.js';
 
 class MyApp extends LitElement {
   static styles = css`
@@ -25,12 +26,13 @@ class MyApp extends LitElement {
       { path: '/', component: 'home-page' },
       { path: '/intro', component: 'intro-page' },
       { path: '/bookshelf', component: 'site-bookshelf' },
+      { path: '/conversation', component: 'site-conversation' },
     ]);
   }
 
   render() {
     return html`
-      <header-bar><span slot="title">Writing Assist</span></header-bar>
+      <header-bar><span slot="title">Dialogic Writing</span></header-bar>
       <main></main>
     `;
   }

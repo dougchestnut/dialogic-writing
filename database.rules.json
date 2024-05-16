@@ -5,6 +5,12 @@
         ".read": "auth != null && auth.uid == $user_id",
         ".write": "auth != null && auth.uid == $user_id"
       }
+    },
+    "convos": {
+      "$user_id": {
+        ".read": "auth != null && auth.uid == $user_id",
+        ".write": "auth != null && auth.uid == $user_id"
+      }
     }
   }
 }
