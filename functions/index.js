@@ -3,6 +3,7 @@ const admin = require('firebase-admin');
 const OpenAI = require('openai');
 const fetch = require('node-fetch');
 const cors = require('cors')({ origin: true });
+const { personas, assignedPersonas } = require('./personas');
 
 const ZOTERO_API_KEY = functions.config().zotero.api_key;
 const ZOTERO_GROUP_ID = functions.config().zotero.group_id;
@@ -36,37 +37,6 @@ const db = admin.database();
 const openai = new OpenAI({
   apiKey: functions.config().openai.key,
 });
-
-const personas = {
-  friendlyBot: {
-    name: "Friendly Bot",
-    description: "A friendly and helpful assistant.",
-    instructions: "You are a friendly and helpful assistant. Always provide positive and encouraging responses.",
-    model: "gpt-4",
-    temperature: 0.7,
-  },
-  expertBot: {
-    name: "Expert Bot",
-    description: "A knowledgeable and professional assistant.",
-    instructions: "You are a knowledgeable and professional assistant. Provide detailed and accurate information.",
-    model: "gpt-4",
-    temperature: 0.3,
-  },
-  creativeBot: {
-    name: "Creative Bot",
-    description: "A creative and imaginative assistant.",
-    instructions: "You are a creative and imaginative assistant. Provide responses with a touch of creativity and humor.",
-    model: "gpt-4",
-    temperature: 0.9,
-  },
-  // Add more personas as needed
-};
-
-// Define which personas are assigned to each path
-const assignedPersonas = {
-  '/chats': ['friendlyBot'], // Example path with assigned personas
-  '/convos': ['friendlyBot', 'expertBot', 'creativeBot'], // Example path with assigned personas
-};
 
 // Helper function to handle message responses
 const handleResponse = async (snapshot, context, pathPrefix) => {
