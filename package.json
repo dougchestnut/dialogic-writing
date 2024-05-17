@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf public/js && rollup -c"
+    "build": "rimraf public/js && rollup -c",
+    "serve": "firebase serve"
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +19,7 @@
   },
   "dependencies": {
     "@material/web": "^1.4.1",
+    "@uvalib/firebase-auth": "^0.1.1",
     "@vaadin/router": "^1.7.5",
     "firebase": "^10.12.0",
     "firebaseui": "^6.1.0",

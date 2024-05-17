@@ -2,7 +2,8 @@
 import { LitElement, html, css } from 'lit';
 import '@material/web/button/filled-button.js';
 import '@material/web/iconbutton/icon-button.js';
-import './modal-auth-login.js';
+import '@uvalib/firebase-auth/modal-auth-login.js';
+import { firebaseConfig } from './firebase-config.js';
 
 class HeaderBar extends LitElement {
   static properties = {
@@ -26,7 +27,7 @@ class HeaderBar extends LitElement {
           <slot name="title"></slot>
         </div>
         <div class="auth">
-          <modal-auth-login @auth-success="${this.handleAuthSuccess}"></modal-auth-login>
+          <modal-auth-login .firebaseConfig="${firebaseConfig}" @auth-success="${this.handleAuthSuccess}"></modal-auth-login>
         </div>
       </header>
     `;

@@ -47,6 +47,7 @@ class ChatBox extends LitElement {
       onValue(messagesRef, (snapshot) => {
         const data = snapshot.val();
         this.messages = data ? Object.values(data) : [];
+        this.scrollToBottom();
       });
     }
   }
@@ -74,6 +75,13 @@ class ChatBox extends LitElement {
       remove(messagesRef).then(() => {
         this.messages = [];
       });
+    }
+  }
+
+  scrollToBottom() {
+    const messagesContainer = this.shadowRoot.querySelector('.messages');
+    if (messagesContainer) {
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
   }
 
